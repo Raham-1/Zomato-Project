@@ -6,7 +6,8 @@ on:
 
 permissions:
   contents: write
-
+  pull-requests: write
+  
 jobs:
   trigger-build:
     uses: devopsbyraham/Zomato-Project/.github/workflows/main.yml@main
