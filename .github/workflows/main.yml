@@ -1,10 +1,21 @@
-name: Secure DevSecOps Pipeline
-
+name: Manual Deploy
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select Target environment'
+        required: true
+        type: choice
+        default: 'staging'
+        options:
+          - development
+          - staging
+          - production
+      deploy_tests:
+        description: 'Run integration tests?'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build:
@@ -27,6 +38,7 @@ jobs:
         run: echo "test"
 
   deploy:
+    if: ${{ github.event.inputs.environment == 'production' }}
     needs: test
     runs-on: ubuntu-slim
     steps:
