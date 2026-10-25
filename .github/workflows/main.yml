@@ -8,8 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-slim
-          
+    runs-on: ubuntu-slim   
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -20,14 +19,12 @@ jobs:
       - name: Build
         run: npm run build
 
-jobs:
   test:
     runs-on: ubuntu-slim
     steps:
       - name: Test
         run: echo "test"
 
-jobs:
   deploy:
     runs-on: ubuntu-slim
     steps:
