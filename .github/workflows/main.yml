@@ -37,14 +37,6 @@ jobs:
       - name: Test
         run: echo "test"
 
-  deploy:
-    if: ${{ github.event.inputs.environment == 'production' }}
-    needs: test
-    runs-on: ubuntu-slim
-    steps:
-
-      - name: Deployment
-        run: echo "app is deployed to container"
 
 
 
