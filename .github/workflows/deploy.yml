@@ -2,15 +2,16 @@ name: Deploy Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 permissions:
-  contents: write
-  pull-requests: write
-  
+  contents: read
+
 jobs:
   trigger-build:
-    uses: devopsbyraham/Zomato-Project/.github/workflows/main.yml@main
+    uses: ./.github/workflows/main.yml
     with:
+      environment: production
+      deploy_tests: true
       node-version: '20'
-
