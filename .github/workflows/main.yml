@@ -20,12 +20,14 @@ jobs:
         run: npm run build
 
   test:
+    needs: build
     runs-on: ubuntu-slim
     steps:
       - name: Test
         run: echo "test"
 
   deploy:
+    needs: test
     runs-on: ubuntu-slim
     steps:
 
