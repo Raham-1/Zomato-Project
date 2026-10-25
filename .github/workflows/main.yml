@@ -1,12 +1,27 @@
-name: Manual Deploy
+name: Deploy Workflow
+
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: false
+        type: string
+        default: staging
+      deploy_tests:
+        required: false
+        type: boolean
+        default: true
+      node-version:
+        required: false
+        type: string
+        default: '20'
   workflow_dispatch:
     inputs:
       environment:
         description: 'Select Target environment'
         required: true
-        type: choice
         default: 'staging'
+        type: choice
         options:
           - development
           - staging
@@ -16,18 +31,24 @@ on:
         required: false
         type: boolean
         default: true
+      node-version:
+        description: 'Node version'
+        required: false
+        default: '20'
+        type: string
 
-permissions:
-  contents: write
-  pull-requests: write
-  
 jobs:
   build:
-    runs-on: ubuntu-slim   
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
       - name: Install dependencies
         run: npm ci
 
@@ -36,11 +57,8 @@ jobs:
 
   test:
     needs: build
-    runs-on: ubuntu-slim
+    if: ${{ inputs.deploy_tests == true }}
+    runs-on: ubuntu-latest
     steps:
       - name: Test
         run: echo "test"
-
-
-
-
