@@ -1,6 +1,10 @@
 name: Deploy Workflow
 
 on:
+  push:
+    paths: 
+      - 'src/**'
+      
   workflow_call:
     inputs:
       environment:
